@@ -1,1 +1,1 @@
-# simple-url-shortner
+# simple-url-shortener
