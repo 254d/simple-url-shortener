@@ -7,14 +7,27 @@ import org.springframework.web.reactive.function.client.WebClient;
 import jp.sus.web.model.UrlShortenerData;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * UrlShortenerWebService.
+ */
 @Service
 @Slf4j
 public class UrlShortenerWebService {
+  /** URL of the API to call. */
   @Value("${jp.shortener.web.api.url:}")
   private String apiUrl;
 
+  /** WebClient insntance */
   private WebClient webClient = WebClient.builder().build();
 
+  /**
+   * Get destination.
+   * 
+   * If it does not exist, null is returned.
+   * 
+   * @param id ID
+   * @return destination URL
+   */
   public String getDestenation(String id) {
     UrlShortenerData response = getSingleDataByApi(id);
     if (null == response) {
@@ -23,6 +36,12 @@ public class UrlShortenerWebService {
     return response.getOriginalUrl();
   }
 
+  /**
+   * Get destination from ID by API
+   * 
+   * @param id ID
+   * @return URL shortener data
+   */
   private UrlShortenerData getSingleDataByApi(String id) {
     try {
       return webClient.get().uri(apiUrl + id).retrieve().bodyToMono(UrlShortenerData.class).block();
