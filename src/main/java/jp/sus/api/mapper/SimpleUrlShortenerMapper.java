@@ -17,7 +17,7 @@ public interface SimpleUrlShortenerMapper {
 
   /** Retrieve single data. */
   @Select("SELECT id, original_url, expire, created_timestamp"
-      + "FROM url_shortener_data WHERE id=#{id}")
+      + " FROM url_shortener_data WHERE id=#{id}")
   public UrlShortenerData findById(String id);
 
   /** Data registration. */
