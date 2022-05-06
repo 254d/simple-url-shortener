@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.sus.api.model.ResponseJsonForm;
 import jp.sus.api.model.UrlShortenerData;
 import jp.sus.api.service.SimpleUrlShortenerService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Controller.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class SimpleUrlShortenerController {
@@ -60,7 +62,7 @@ public class SimpleUrlShortenerController {
 
   /**
    * URL shortener data registration.
-   * 
+   *
    * @param newItem URL shortener data
    * @param result binding results
    * @return post registration URL shortener data
@@ -73,7 +75,7 @@ public class SimpleUrlShortenerController {
       response.setMessage(result.getFieldError().getDefaultMessage());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
-
+    log.info(newItem.toString());
     UrlShortenerData response = service.create(newItem);
 
     return ResponseEntity.status(HttpStatus.OK).body(response);
