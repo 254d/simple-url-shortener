@@ -33,7 +33,6 @@
   <script>
     const API_URL = "http://localhost:8080/api/"
     const WEB_SERVICE_URL = "http://localhost:8080/"
-
     const app = Vue.createApp({
       data: () => ({
         url: "",
@@ -42,21 +41,6 @@
         originalUrl: ""
       }),
       methods: {
-        addItem: function (event) {
-          // console.log('Clicked!')
-          if (this.newItem === '') return
-          let todo = {
-            item: this.newItem,
-            isDone: false
-          }
-          this.todos.push(todo)
-          this.newItem = ''
-        },
-        deleteItem: function (index) {
-          // console.log('Delete!')
-          // console.log(index)
-          this.todos.splice(index, 1)
-        },
         add: function () {
           axios.post(API_URL, {
             originalUrl: this.url
@@ -66,15 +50,11 @@
               this.response = response;
               this.result = WEB_SERVICE_URL + response.data.id;
             })
-
-          this.originalUrl = this.url;
-          this.url = "";
-
-
+          this.originalUrl = this.url
+          this.url = ""
         }
       }
     })
-    // Registering and mounting our app
     app.mount('#app');
   </script>
 </body>
