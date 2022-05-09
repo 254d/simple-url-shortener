@@ -31,8 +31,10 @@
   <script src="https://unpkg.com/vue@next"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
   <script>
-    const API_URL = "http://localhost:8080/api/"
-    const WEB_SERVICE_URL = "http://localhost:8080/"
+    const API_URL = location.href + "api/"
+    const WEB_SERVICE_URL = location.href
+    console.log(API_URL);
+    console.log(WEB_SERVICE_URL);
     const app = Vue.createApp({
       data: () => ({
         url: "",

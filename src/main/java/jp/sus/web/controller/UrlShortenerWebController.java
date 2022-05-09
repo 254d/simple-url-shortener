@@ -1,11 +1,14 @@
 package jp.sus.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+
 import jp.sus.web.service.UrlShortenerWebService;
 
 /**
@@ -16,6 +19,27 @@ public class UrlShortenerWebController {
   /** Service. */
   @Autowired
   private UrlShortenerWebService service;
+  /** URL of the API to call. */
+  @Value("${jp.shortener.web.api.host:}")
+  private String apiHost;
+  /** Server port number. */
+  @Value("${server.port:8080}")
+  private String port;
+
+  /**
+   * Index
+   * 
+   * @param model
+   * @return index
+   */
+  @GetMapping("/")
+  public String index(Model model) {
+    String serviceUrl = "http://" + apiHost + ":" + port + "/";
+    String apiUrl = serviceUrl + "api/";
+    model.addAttribute("apiUrl", apiUrl);
+    model.addAttribute("serviceUrl", serviceUrl);
+    return "index";
+  }
 
   /**
    * Redirect

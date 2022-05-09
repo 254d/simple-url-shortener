@@ -4,6 +4,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
 import jp.sus.web.model.UrlShortenerData;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,8 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UrlShortenerWebService {
   /** URL of the API to call. */
-  @Value("${jp.shortener.web.api.url:}")
-  private String apiUrl;
+  @Value("${jp.shortener.web.api.host:}")
+  private String apiHost;
+  /** Server port number. */
+  @Value("${server.port:8080}")
+  private String port;
 
   /** WebClient insntance */
   private WebClient webClient = WebClient.builder().build();
@@ -44,11 +48,11 @@ public class UrlShortenerWebService {
    */
   private UrlShortenerData getSingleDataByApi(String id) {
     try {
-      return webClient.get().uri(apiUrl + id).retrieve().bodyToMono(UrlShortenerData.class).block();
+      String url = "http://" + apiHost + ":" + port +"/api/" + id;
+      return webClient.get().uri(url).retrieve().bodyToMono(UrlShortenerData.class).block();
     } catch (Exception e) {
       log.debug(ExceptionUtils.getStackTrace(e));
       return null;
     }
   }
-
 }
