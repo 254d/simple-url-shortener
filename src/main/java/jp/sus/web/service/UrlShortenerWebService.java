@@ -48,7 +48,7 @@ public class UrlShortenerWebService {
    */
   private UrlShortenerData getSingleDataByApi(String id) {
     try {
-      String url = "http://" + apiHost + ":" + port +"/api/" + id;
+      String url = "http://" + apiHost + ":" + port + "/api/" + id;
       return webClient.get().uri(url).retrieve().bodyToMono(UrlShortenerData.class).block();
     } catch (Exception e) {
       log.debug(ExceptionUtils.getStackTrace(e));
